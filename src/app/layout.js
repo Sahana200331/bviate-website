@@ -3,13 +3,13 @@ import "./globals.css"
 
 const syne = Syne({
   subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-syne",
   display: "swap",
 })
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-body",
+  variable: "--font-dm-sans",
   display: "swap",
 })
 
@@ -20,8 +20,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
-      <body className="bg-navy text-white font-body">
+    <html lang="en" className={syne.variable + " " + dmSans.variable}>
+      <body>
         {children}
       </body>
     </html>
