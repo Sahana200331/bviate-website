@@ -1,29 +1,34 @@
-import { Syne, DM_Sans } from "next/font/google"
-import "./globals.css"
+import { Syne, DM_Sans } from "next/font/google";
+import "./globals.css";
 
-const syne = Syne({
+// 1. Imports for our global components
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
+// 2. Initialize the fonts
+const syne = Syne({ 
   subsets: ["latin"],
-  variable: "--font-syne",
-  display: "swap",
-})
+  variable: "--font-syne" 
+});
 
-const dmSans = DM_Sans({
+const dmSans = DM_Sans({ 
   subsets: ["latin"],
-  variable: "--font-dm-sans",
-  display: "swap",
-})
-
-export const metadata = {
-  title: "Bviate Ventures — We Build, Scale, and Automate Ambitious Brands",
-  description: "Full-service digital growth company — web development, performance marketing, SEO, and business automation.",
-}
+  variable: "--font-dm-sans" 
+});
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={syne.variable + " " + dmSans.variable}>
-      <body>
-        {children}
+    <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
+      <body className="bg-navy text-white font-body flex flex-col min-h-screen">
+        
+        <Navbar />
+        
+        {/* Added flex-grow so the footer gets pushed to the very bottom */}
+        <main className="flex-grow pt-16">{children}</main>
+        
+        <Footer />
+        
       </body>
     </html>
-  )
+  );
 }

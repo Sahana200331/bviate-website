@@ -1,135 +1,88 @@
+// src/components/LeadContactForm.js
 "use client";
-
 import { useState } from "react";
-
-const initialForm = {
-  name: "",
-  email: "",
-  whatsapp: "",
-  service_interested: "",
-};
+import { useFadeIn } from "../hooks/useFadeIn"; // 1. Added the missing import!
 
 export default function LeadContactForm() {
-  const [form, setForm] = useState(initialForm);
-  const [status, setStatus] = useState({ type: "", message: "" });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  useFadeIn(); // 2. Trigger the animation so it becomes visible!
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setForm((previous) => ({ ...previous, [name]: value }));
+  const [form, setForm] = useState({ name: "", email: "", whatsapp: "", service: "", message: "" });
+  const [status, setStatus] = useState("idle"); // idle | loading | success | error
+
+  const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("loading");
+    
+    // Simulating the API call for now as per DOC-4 instructions
+    console.log("Form submitted:", form);
+    setTimeout(() => {
+      setStatus("success");
+      setForm({ name: "", email: "", whatsapp: "", service: "", message: "" });
+    }, 1500);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setStatus({ type: "", message: "" });
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data?.error || "Failed to submit form.");
-      }
-
-      setForm(initialForm);
-      setStatus({
-        type: "success",
-        message:
-          "Thanks for reaching out. Our team will contact you on WhatsApp shortly.",
-      });
-    } catch (error) {
-      setStatus({
-        type: "error",
-        message:
-          error instanceof Error
-            ? error.message
-            : "Something went wrong while sending your details.",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  if (status === "success") {
+    return (
+      <div className="bg-primary/10 border border-primary/30 rounded-2xl p-8 text-center fade-in">
+        <div className="text-4xl mb-4">✅</div>
+        <h3 className="text-white text-xl font-bold mb-2">Message Sent!</h3>
+        <p className="text-secondary">We will be in touch with you within 24 hours.</p>
+        <button onClick={() => setStatus("idle")} className="mt-6 text-primary text-sm font-bold hover:underline">
+          Send another message
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-8 grid gap-4 md:grid-cols-2">
-      <label className="grid gap-2 text-sm font-medium text-slate-700">
-        Name
-        <input
-          required
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          className="rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-slate-800"
-          placeholder="Your full name"
-        />
-      </label>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6 fade-in">
+      {/* Name & Email Row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="flex flex-col gap-2">
+          <label className="text-white text-sm font-semibold">Full Name *</label>
+          <input required type="text" name="name" value={form.name} onChange={handleChange} className="bg-navy border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors" placeholder="John Doe" />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-white text-sm font-semibold">Email Address *</label>
+          <input required type="email" name="email" value={form.email} onChange={handleChange} className="bg-navy border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors" placeholder="john@company.com" />
+        </div>
+      </div>
 
-      <label className="grid gap-2 text-sm font-medium text-slate-700">
-        Email
-        <input
-          required
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          className="rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-slate-800"
-          placeholder="you@company.com"
-        />
-      </label>
+      {/* WhatsApp & Service Row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="flex flex-col gap-2">
+          <label className="text-white text-sm font-semibold">WhatsApp Number</label>
+          <input type="tel" name="whatsapp" value={form.whatsapp} onChange={handleChange} className="bg-navy border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors" placeholder="+91 XXXXX XXXXX" />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-white text-sm font-semibold">Service of Interest *</label>
+          <select required name="service" value={form.service} onChange={handleChange} className="bg-navy border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors appearance-none">
+            <option value="" disabled>Select a service...</option>
+            <option value="automation">N8N Automation</option>
+            <option value="web-dev">Web Development</option>
+            <option value="ads">Performance Marketing</option>
+            <option value="seo">SEO Optimization</option>
+            <option value="funnels">Funnels & Copywriting</option>
+          </select>
+        </div>
+      </div>
 
-      <label className="grid gap-2 text-sm font-medium text-slate-700 md:col-span-2">
-        Service Interested
-        <select
-          required
-          name="service_interested"
-          value={form.service_interested}
-          onChange={handleChange}
-          className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-slate-800"
-        >
-          <option value="" disabled>
-            Select a service
-          </option>
-          <option value="Hospital Uniforms">Hospital Uniforms</option>
-          <option value="Hotel Uniforms">Hotel Uniforms</option>
-          <option value="Security Uniforms">Security Uniforms</option>
-        </select>
-      </label>
+      {/* Message */}
+      <div className="flex flex-col gap-2">
+        <label className="text-white text-sm font-semibold">Tell us about your project *</label>
+        <textarea required name="message" value={form.message} onChange={handleChange} rows="5" className="bg-navy border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors resize-none" placeholder="What are your current bottlenecks and growth goals?" />
+      </div>
 
-      <label className="grid gap-2 text-sm font-medium text-slate-700 md:col-span-2">
-        WhatsApp Number
-        <input
-          required
-          name="whatsapp"
-          value={form.whatsapp}
-          onChange={handleChange}
-          className="rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-slate-800"
-          placeholder="+91 98765 43210"
-        />
-      </label>
-
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="md:col-span-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
+      {/* Submit Button */}
+      <button 
+        type="submit" 
+        disabled={status === "loading"}
+        className="bg-gradient-to-r from-primary to-purple text-white font-bold py-4 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 mt-2"
       >
-        {isSubmitting ? "Sending..." : "Submit Enquiry"}
+        {status === "loading" ? "Sending..." : "Send Message →"}
       </button>
-
-      {status.message ? (
-        <p
-          className={`md:col-span-2 text-sm ${
-            status.type === "success" ? "text-emerald-700" : "text-red-700"
-          }`}
-        >
-          {status.message}
-        </p>
-      ) : null}
     </form>
   );
 }
