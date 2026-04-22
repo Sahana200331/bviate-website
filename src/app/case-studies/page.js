@@ -13,7 +13,17 @@ export const metadata = {
     type: 'website',
   },
 }
-
+export const metadata = {
+  title: "Case Studies — Real Results | Bviate Ventures",
+  description: "View real results and case studies from Bviate Ventures.",
+  openGraph: {
+    title: "Case Studies — Real Results | Bviate Ventures",
+    description: "View real results and case studies from Bviate Ventures.",
+    url: "https://bviate.com/case-studies",
+    siteName: "Bviate Ventures",
+    type: "website",
+  },
+}
 export default function CaseStudiesPage() {
   return (
     <>

@@ -13,7 +13,17 @@ export const metadata = {
     type: 'website',
   },
 }
-
+export const metadata = {
+  title: "Careers — Join Bviate Ventures",
+  description: "Join the team at Bviate Ventures.",
+  openGraph: {
+    title: "Careers — Join Bviate Ventures",
+    description: "Join the team at Bviate Ventures.",
+    url: "https://bviate.com/careers",
+    siteName: "Bviate Ventures",
+    type: "website",
+  },
+}
 export default function CareersPage() {
   return (
     <>

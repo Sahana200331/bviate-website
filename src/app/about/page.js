@@ -13,7 +13,17 @@ export const metadata = {
     type: 'website',
   },
 }
-
+export const metadata = {
+  title: "About Us | Bviate Ventures",
+  description: "Learn about Bviate Ventures — our story, mission, and the team building your digital growth engine.",
+  openGraph: {
+    title: "About Us | Bviate Ventures",
+    description: "Learn about Bviate Ventures — our story, mission, and the team building your digital growth engine.",
+    url: "https://bviate.com/about",
+    siteName: "Bviate Ventures",
+    type: "website",
+  },
+}
 export default function AboutPage() {
   return (
     <>

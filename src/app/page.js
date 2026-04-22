@@ -1,34 +1,29 @@
-// src/app/page.js
 import Hero from "../components/home/Hero";
 import StatsBar from "../components/home/StatsBar";
 import ServicesGrid from "../components/home/ServicesGrid";
 import HowWeWork from "../components/home/HowWeWork";
 import Industries from "../components/home/Industries";
-import Testimonials from "../components/home/Testimonials"; // Imported!
-import CTABanner from "../components/CTABanner"; // Imported from the parent folder!
 
 export const metadata = {
-  title: 'Home | Bviate Ventures',
-  description: 'We Build, Scale, and Automate Ambitious Brands. Discover our digital growth engines.',
+  title: "Bviate Ventures — We Build, Scale, and Automate Ambitious Brands",
+  description: "Bviate Ventures — We Build, Scale, and Automate Ambitious Brands",
   openGraph: {
-    title: 'Home | Bviate Ventures',
-    description: 'We Build, Scale, and Automate Ambitious Brands. Discover our digital growth engines.',
-    url: 'https://bviate.com/',
-    siteName: 'Bviate Ventures',
-    type: 'website',
+    title: "Bviate Ventures — We Build, Scale, and Automate Ambitious Brands",
+    description: "Bviate Ventures — We Build, Scale, and Automate Ambitious Brands",
+    url: "https://bviate.com",
+    siteName: "Bviate Ventures",
+    type: "website",
   },
-}
+};
 
-export default function HomePage() {
+export default function Page() {
   return (
-    <> 
-      <Hero /> 
+    <main>
+      <Hero />
       <StatsBar />
       <ServicesGrid />
       <HowWeWork />
       <Industries />
-      <Testimonials /> {/* Added to layout! */}
-      <CTABanner /> {/* Added to layout! */}
-    </>
-  )
+    </main>
+  );
 }

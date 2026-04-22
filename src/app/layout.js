@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from "@next/third-parties/google"
 import { Syne, DM_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -25,7 +26,7 @@ export default function RootLayout({ children }) {
         
         {/* Added flex-grow so the footer gets pushed to the very bottom */}
         <main className="flex-grow pt-16">{children}</main>
-        
+        <GoogleAnalytics gaId="G-XXXXXXXXXX" />
         <Footer />
         
       </body>
