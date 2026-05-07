@@ -1,42 +1,23 @@
-// src/app/about/page.js
-import AboutContent from "./AboutContent"; // Safe colocation import
-import CTABanner from "../../components/CTABanner";
-
-export const metadata = {
-  title: 'About Us | Bviate Ventures',
-  description: 'Meet the team of growth architects and developers behind Bviate Ventures.',
-  openGraph: {
-    title: 'About Us | Bviate Ventures',
-    description: 'Meet the team of growth architects and developers behind Bviate Ventures.',
-    url: 'https://bviate.com/about',
-    siteName: 'Bviate Ventures',
-    type: 'website',
-  },
-}
 export const metadata = {
   title: "About Us | Bviate Ventures",
-  description: "Learn about Bviate Ventures — our story, mission, and the team building your digital growth engine.",
+  description: "Learn about Bviate Ventures — our story, mission, and the team.",
   openGraph: {
     title: "About Us | Bviate Ventures",
-    description: "Learn about Bviate Ventures — our story, mission, and the team building your digital growth engine.",
-    url: "https://bviate.com/about",
+    description: "Learn about Bviate Ventures — our story, mission, and the team.",
+    url: "https://bviateventures.com/about",
     siteName: "Bviate Ventures",
     type: "website",
-  },
-}
+  }
+};
+
 export default function AboutPage() {
   return (
-    <>
-      <main>
-        <AboutContent />
-      </main>
-      
-      <CTABanner 
-        tag="Work With Us" 
-        title="Ready to engineer your growth?" 
-        primaryText="Book a Discovery Call →" 
-        primaryHref="/contact"
-      />
-    </>
+    <main className="min-h-screen">
+      {/* IMPORTANT: If you already built the design/UI for this page 
+        farther down in your old file, paste that code right here 
+        inside the <main> tags! 
+      */}
+      <h1>About Us</h1>
+    </main>
   );
 }
