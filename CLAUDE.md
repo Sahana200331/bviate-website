@@ -81,7 +81,7 @@ Used on the words "Build", "Scale", "Bviate". For "Automate" use `from-primary t
 7. **JSX:** `className` not `class`
 8. **Client components:** Add `"use client"` as the FIRST line if the file uses `useState`, `useEffect`, `usePathname`, `useRef`, or any browser API
 9. **Metadata:** Every `page.js` must `export const metadata = { ... }` at the top — see DOC-4 / DOC-5 for full template
-10. **External links:** Use `<a target="_blank" rel="noopener noreferrer">` — these are external, not internal
+10. **External links:** Use `<a target="_blank" rel="noopener noreferrer">` for links that open a new tab — never for `mailto:`, `tel:`, or `wa.me` links (those open native apps, not browser tabs, so `rel` is not needed)
 
 ---
 
@@ -189,9 +189,9 @@ Full step-by-step instructions live in `/docs/`. Read the relevant doc before st
 - ✅ Home page (with Hero, Stats, ServicesGrid, etc.)
 - ✅ Contact page (with `LeadContactForm.js` component)
 - ✅ Services overview + Automation page (with `AutomationContent.js`)
-- ⚠️ About page exists but **no content** — needs build per DOC-4
-- ⚠️ Case Studies page exists but **no content** — needs build per DOC-4
-- ⚠️ Careers page exists but **no content** — needs build per DOC-4
+- ✅ About page — built
+- ✅ Case Studies page — built
+- ✅ Careers page — built
 - ⏳ Web Development, Performance Marketing, SEO, Social Media, Funnels — pending
 - ⏳ Blog, Privacy, Terms, Sitemap — pending
 - ⏳ Backend API route + Supabase + N8N integration — pending (DOC-5)
