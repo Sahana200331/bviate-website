@@ -13,17 +13,6 @@ export const metadata = {
     type: 'website',
   },
 }
-export const metadata = {
-  title: "N8N Business Automation | Bviate Ventures",
-  description: "Learn about N8N Business Automation at Bviate Ventures.",
-  openGraph: {
-    title: "N8N Business Automation | Bviate Ventures",
-    description: "Learn about N8N Business Automation at Bviate Ventures.",
-    url: "https://bviate.com/services/automation",
-    siteName: "Bviate Ventures",
-    type: "website",
-  },
-}
 export default function AutomationPage() {
   return (
     <>
