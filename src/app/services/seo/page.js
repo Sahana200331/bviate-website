@@ -1,14 +1,14 @@
-import SEOContent from "./SEOContent";
+﻿import SEOContent from "./SEOContent";
 import CTABanner from "../../../components/CTABanner";
 
 export const metadata = {
-  title: "SEO Optimisation | Bviate Ventures",
+  title: "SEO Optimisation | Bviate Solutions",
   description: "Technical SEO, content strategy, and authority building that drives compounding organic traffic — without paying per click.",
   openGraph: {
-    title: "SEO Optimisation | Bviate Ventures",
+    title: "SEO Optimisation | Bviate Solutions",
     description: "Technical SEO, content strategy, and authority building that drives compounding organic traffic — without paying per click.",
     url: "https://bviate.com/services/seo",
-    siteName: "Bviate Ventures",
+    siteName: "Bviate Solutions",
     type: "website",
   },
 };

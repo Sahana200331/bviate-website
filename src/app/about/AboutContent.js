@@ -1,4 +1,4 @@
-// src/app/about/AboutContent.js
+﻿// src/app/about/AboutContent.js
 "use client";
 
 import { useFadeIn } from "../../hooks/useFadeIn";
@@ -40,7 +40,7 @@ export default function AboutContent() {
             <span className="bg-gradient-to-r from-primary to-purple bg-clip-text text-transparent">scale ambitious brands.</span>
           </h1>
           <p className="text-secondary text-lg mb-10 max-w-2xl mx-auto">
-            Bviate Ventures was founded on a simple principle: businesses shouldn't fail because of bad marketing or broken systems. We exist to engineer predictable, automated growth for our partners.
+            Bviate Solutions was founded on a simple principle: businesses shouldn't fail because of bad marketing or broken systems. We exist to engineer predictable, automated growth for our partners.
           </p>
         </div>
       </section>

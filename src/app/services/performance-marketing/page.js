@@ -1,14 +1,14 @@
-import PerfMarketingContent from "./PerfMarketingContent";
+﻿import PerfMarketingContent from "./PerfMarketingContent";
 import CTABanner from "../../../components/CTABanner";
 
 export const metadata = {
-  title: "Performance Marketing | Bviate Ventures",
+  title: "Performance Marketing | Bviate Solutions",
   description: "Data-driven Google and Meta ad campaigns that lower your cost-per-lead and maximise ROAS. No guesswork — just results.",
   openGraph: {
-    title: "Performance Marketing | Bviate Ventures",
+    title: "Performance Marketing | Bviate Solutions",
     description: "Data-driven Google and Meta ad campaigns that lower your cost-per-lead and maximise ROAS. No guesswork — just results.",
     url: "https://bviate.com/services/performance-marketing",
-    siteName: "Bviate Ventures",
+    siteName: "Bviate Solutions",
     type: "website",
   },
 };

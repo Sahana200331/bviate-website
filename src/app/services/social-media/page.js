@@ -1,14 +1,14 @@
-import SocialMediaContent from "./SocialMediaContent";
+﻿import SocialMediaContent from "./SocialMediaContent";
 import CTABanner from "../../../components/CTABanner";
 
 export const metadata = {
-  title: "Social Media Management | Bviate Ventures",
+  title: "Social Media Management | Bviate Solutions",
   description: "Content strategy, creative production, and community management that builds brand equity and turns followers into customers.",
   openGraph: {
-    title: "Social Media Management | Bviate Ventures",
+    title: "Social Media Management | Bviate Solutions",
     description: "Content strategy, creative production, and community management that builds brand equity and turns followers into customers.",
     url: "https://bviate.com/services/social-media",
-    siteName: "Bviate Ventures",
+    siteName: "Bviate Solutions",
     type: "website",
   },
 };

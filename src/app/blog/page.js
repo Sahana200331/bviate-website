@@ -1,11 +1,11 @@
-export const metadata = {
-  title: "Digital Marketing Blog | Bviate Ventures",
-  description: "Read the latest insights on the Digital Marketing Blog by Bviate Ventures.",
+﻿export const metadata = {
+  title: "Digital Marketing Blog | Bviate Solutions",
+  description: "Read the latest insights on the Digital Marketing Blog by Bviate Solutions.",
   openGraph: {
-    title: "Digital Marketing Blog | Bviate Ventures",
-    description: "Read the latest insights on the Digital Marketing Blog by Bviate Ventures.",
+    title: "Digital Marketing Blog | Bviate Solutions",
+    description: "Read the latest insights on the Digital Marketing Blog by Bviate Solutions.",
     url: "https://bviate.com/blog",
-    siteName: "Bviate Ventures",
+    siteName: "Bviate Solutions",
     type: "website",
   },
 }

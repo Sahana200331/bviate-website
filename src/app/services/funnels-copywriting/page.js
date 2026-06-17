@@ -1,14 +1,14 @@
-import FunnelsContent from "./FunnelsContent";
+﻿import FunnelsContent from "./FunnelsContent";
 import CTABanner from "../../../components/CTABanner";
 
 export const metadata = {
-  title: "Funnels & Copywriting | Bviate Ventures",
+  title: "Funnels & Copywriting | Bviate Solutions",
   description: "High-converting sales funnels, landing pages, and copy that move your ideal client from interested to sold.",
   openGraph: {
-    title: "Funnels & Copywriting | Bviate Ventures",
+    title: "Funnels & Copywriting | Bviate Solutions",
     description: "High-converting sales funnels, landing pages, and copy that move your ideal client from interested to sold.",
     url: "https://bviate.com/services/funnels-copywriting",
-    siteName: "Bviate Ventures",
+    siteName: "Bviate Solutions",
     type: "website",
   },
 };

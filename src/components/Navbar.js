@@ -38,7 +38,7 @@ export default function Navbar() {
         
         {/* Brand Logo */}
         <Link href="/" className="font-display text-2xl font-black tracking-tight flex items-center gap-1 hover:opacity-80 transition-opacity">
-          <span className="text-primary">Bviate</span><span className="text-white">Ventures</span>
+          <span className="text-primary">Bviate</span><span className="text-white">Solutions</span>
         </Link>
 
         {/* Desktop Navigation */}

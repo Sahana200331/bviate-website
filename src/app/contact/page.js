@@ -1,15 +1,15 @@
-import LeadContactForm from "../../components/LeadContactForm";
+﻿import LeadContactForm from "../../components/LeadContactForm";
 import SectionTag from "../../components/ui/SectionTag";
 import CTABanner from "../../components/CTABanner";
 
 export const metadata = {
-  title: "Book a Discovery Call | Bviate Ventures",
-  description: "Book a Discovery Call with Bviate Ventures.",
+  title: "Book a Discovery Call | Bviate Solutions",
+  description: "Book a Discovery Call with Bviate Solutions.",
   openGraph: {
-    title: "Book a Discovery Call | Bviate Ventures",
-    description: "Book a Discovery Call with Bviate Ventures.",
+    title: "Book a Discovery Call | Bviate Solutions",
+    description: "Book a Discovery Call with Bviate Solutions.",
     url: "https://bviate.com/contact",
-    siteName: "Bviate Ventures",
+    siteName: "Bviate Solutions",
     type: "website",
   },
 };

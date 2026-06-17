@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -17,7 +17,7 @@ export default function Footer() {
               <span className="bg-gradient-to-r from-primary to-purple bg-clip-text text-transparent">
                 Bviate
               </span>
-              Ventures
+              Solutions
             </Link>
             <p className="text-secondary text-sm leading-relaxed mt-4">
               Building digital growth engines for ambitious brands.
@@ -53,7 +53,7 @@ export default function Footer() {
         {/* Copyright Line */}
         <div className="border-t border-primary/15 pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-secondary text-sm">
-            © 2025 Bviate Ventures. All rights reserved.
+            © 2025 Bviate Solutions. All rights reserved.
           </p>
         </div>
 

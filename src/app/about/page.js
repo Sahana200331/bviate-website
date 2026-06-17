@@ -1,15 +1,15 @@
-import SectionTag from "../../components/ui/SectionTag";
+﻿import SectionTag from "../../components/ui/SectionTag";
 import CTABanner from "../../components/CTABanner";
 import Button from "../../components/ui/Button";
 
 export const metadata = {
-  title: "About Us | Bviate Ventures",
-  description: "Learn about Bviate Ventures — our story, mission, and the team driving digital growth for ambitious brands.",
+  title: "About Us | Bviate Solutions",
+  description: "Learn about Bviate Solutions — our story, mission, and the team driving digital growth for ambitious brands.",
   openGraph: {
-    title: "About Us | Bviate Ventures",
-    description: "Learn about Bviate Ventures — our story, mission, and the team driving digital growth for ambitious brands.",
+    title: "About Us | Bviate Solutions",
+    description: "Learn about Bviate Solutions — our story, mission, and the team driving digital growth for ambitious brands.",
     url: "https://bviateventures.com/about",
-    siteName: "Bviate Ventures",
+    siteName: "Bviate Solutions",
     type: "website",
   }
 };
@@ -53,7 +53,7 @@ export default function AboutPage() {
         <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-purple/15 rounded-full blur-[100px] -z-10 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto">
-          <SectionTag>About Bviate Ventures</SectionTag>
+          <SectionTag>About Bviate Solutions</SectionTag>
           <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] tracking-tight mb-6 max-w-4xl">
             We Exist to Make{" "}
             <span className="bg-gradient-to-r from-primary to-purple bg-clip-text text-transparent">
@@ -62,7 +62,7 @@ export default function AboutPage() {
             Unstoppable.
           </h1>
           <p className="text-secondary text-lg md:text-xl font-light leading-relaxed max-w-2xl mb-10">
-            Bviate Ventures is a full-stack digital growth agency. We combine automation, performance marketing,
+            Bviate Solutions is a full-stack digital growth agency. We combine automation, performance marketing,
             web development, and SEO into one integrated engine that drives predictable, scalable growth.
           </p>
           <Button href="/contact">Work With Us →</Button>
@@ -90,7 +90,7 @@ export default function AboutPage() {
               Built by Operators, Not Just Marketers.
             </h2>
             <p className="text-secondary text-lg leading-relaxed mb-5">
-              Bviate Ventures was founded on a simple observation: most agencies deliver reports, not results.
+              Bviate Solutions was founded on a simple observation: most agencies deliver reports, not results.
               They run campaigns in silos — ads here, SEO there, a website somewhere else — and wonder why growth stalls.
             </p>
             <p className="text-secondary text-lg leading-relaxed mb-5">

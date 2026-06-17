@@ -1,15 +1,15 @@
-import SectionTag from "../../components/ui/SectionTag";
+﻿import SectionTag from "../../components/ui/SectionTag";
 import CTABanner from "../../components/CTABanner";
 import Button from "../../components/ui/Button";
 
 export const metadata = {
-  title: "Case Studies – Real Results | Bviate Ventures",
-  description: "See how Bviate Ventures has driven measurable growth for ambitious brands through automation, performance marketing, SEO, and web development.",
+  title: "Case Studies – Real Results | Bviate Solutions",
+  description: "See how Bviate Solutions has driven measurable growth for ambitious brands through automation, performance marketing, SEO, and web development.",
   openGraph: {
-    title: "Case Studies – Real Results | Bviate Ventures",
-    description: "See how Bviate Ventures has driven measurable growth for ambitious brands through automation, performance marketing, SEO, and web development.",
+    title: "Case Studies – Real Results | Bviate Solutions",
+    description: "See how Bviate Solutions has driven measurable growth for ambitious brands through automation, performance marketing, SEO, and web development.",
     url: "https://bviateventures.com/case-studies",
-    siteName: "Bviate Ventures",
+    siteName: "Bviate Solutions",
     type: "website",
   }
 };

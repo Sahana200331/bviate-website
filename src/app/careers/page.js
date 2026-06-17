@@ -1,15 +1,15 @@
-import SectionTag from "../../components/ui/SectionTag";
+﻿import SectionTag from "../../components/ui/SectionTag";
 import CTABanner from "../../components/CTABanner";
 import Button from "../../components/ui/Button";
 
 export const metadata = {
-  title: "Careers – Join Bviate Ventures",
-  description: "Join the team at Bviate Ventures. We're building the best digital growth agency in India — and we're looking for obsessive, high-ownership operators.",
+  title: "Careers – Join Bviate Solutions",
+  description: "Join the team at Bviate Solutions. We're building the best digital growth agency in India — and we're looking for obsessive, high-ownership operators.",
   openGraph: {
-    title: "Careers – Join Bviate Ventures",
-    description: "Join the team at Bviate Ventures. We're building the best digital growth agency in India — and we're looking for obsessive, high-ownership operators.",
+    title: "Careers – Join Bviate Solutions",
+    description: "Join the team at Bviate Solutions. We're building the best digital growth agency in India — and we're looking for obsessive, high-ownership operators.",
     url: "https://bviateventures.com/careers",
-    siteName: "Bviate Ventures",
+    siteName: "Bviate Solutions",
     type: "website",
   }
 };

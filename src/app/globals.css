@@ -14,10 +14,32 @@
   --font-body:    var(--font-dm-sans), sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: #0D1B2A;
+  background:
+    radial-gradient(1100px 520px at 50% -8%, rgba(124,58,237,.22), transparent 60%),
+    radial-gradient(900px 500px at 8% 8%, rgba(37,99,235,.20), transparent 60%),
+    radial-gradient(800px 600px at 100% 35%, rgba(6,182,212,.10), transparent 55%),
+    #0D1B2A;
   color: #ffffff;
   font-family: var(--font-body);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size: 62px 62px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 55% at 50% 0%, #000 25%, transparent 72%);
+  mask-image: radial-gradient(ellipse 75% 55% at 50% 0%, #000 25%, transparent 72%);
 }
 /* --- Bviate Custom Animations --- */
 
