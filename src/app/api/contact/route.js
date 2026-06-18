@@ -8,6 +8,7 @@ export async function POST(request) {
   )
   try {
     const body = await request.json()
+    console.log("Submission received:", body)
     const { name, email, whatsapp, service, message } = body
 
     // 1. Save to Supabase
@@ -15,7 +16,10 @@ export async function POST(request) {
       .from("leads")
       .insert([{ name, email, whatsapp, service_interested: service, message }])
 
-    if (error) throw error
+    if (error) {
+      console.error("Supabase error:", error)
+      throw error
+    }
 
     // 2. Fire N8N webhook
     await fetch(process.env.N8N_WEBHOOK_URL, {

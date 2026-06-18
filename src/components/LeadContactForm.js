@@ -15,13 +15,34 @@ export default function LeadContactForm() {
     e.preventDefault();
     setStatus("loading");
 
-    // Simulating the API call for now as per DOC-4 instructions
-    console.log("Form submitted:", form);
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) throw new Error(data.error || "Submission failed");
       setStatus("success");
       setForm({ name: "", email: "", whatsapp: "", service: "", message: "" });
-    }, 1500);
+    } catch (err) {
+      console.error("Form submission error:", err);
+      setStatus("error");
+    }
   };
+
+  if (status === "error") {
+    return (
+      <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-8 text-center">
+        <div className="text-4xl mb-4">❌</div>
+        <h3 className="text-white text-xl font-bold mb-2">Something went wrong.</h3>
+        <p className="text-secondary">Please try again or email us directly at hello@bviate.com</p>
+        <button onClick={() => setStatus("idle")} className="mt-6 text-primary text-sm font-bold hover:underline">
+          Try again
+        </button>
+      </div>
+    );
+  }
 
   if (status === "success") {
     return (
