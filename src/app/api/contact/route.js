@@ -5,6 +5,11 @@ export async function POST(request) {
   try {
     const body = await request.json()
     console.log("Submission received:", body)
+    console.log("ENV CHECK:", {
+      url: process.env.NEXT_PUBLIC_SUPABASE_URL,
+      keyExists: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      keyLength: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.length
+    })
 
     const { name, email, whatsapp, service, message } = body
 
