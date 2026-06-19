@@ -53,7 +53,12 @@ export async function POST(request) {
       .select()
 
     if (error) {
-      console.error("STEP 5 FAILED - Supabase insert error:", JSON.stringify(error))
+      console.error("STEP 5 FAILED - Supabase insert error:", JSON.stringify({
+        message: error.message,
+        code: error.code,
+        details: error.details,
+        hint: error.hint
+      }))
       return Response.json({ success: false, error: error.message }, { status: 500 })
     }
 
