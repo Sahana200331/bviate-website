@@ -51,30 +51,19 @@ export default function LeadContactForm() {
 
   if (status === "success") {
     return (
-      <div
-        className="text-center py-8 px-4"
-        style={{ animation: 'fadeSlideUp 0.4s ease forwards' }}
-      >
-        <style>{`
-          @keyframes fadeSlideUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to   { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes scaleIn {
-            from { transform: scale(0); opacity: 0; }
-            to   { transform: scale(1); opacity: 1; }
-          }
-        `}</style>
+      <div className="animate-fade-slide-up text-center py-8 px-4">
 
         {/* Checkmark circle */}
-        <div style={{
-          width: 72, height: 72,
-          borderRadius: '50%',
-          background: 'linear-gradient(135deg, #2563EB, #7C3AED)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          margin: '0 auto 24px',
-          animation: 'scaleIn 0.3s ease 0.2s both'
-        }}>
+        <div
+          className="animate-scale-in"
+          style={{
+            width: 72, height: 72,
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg, #2563EB, #7C3AED)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            margin: '0 auto 24px',
+          }}
+        >
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
             <path d="M5 13l4 4L19 7" stroke="white" strokeWidth="2.5"
                   strokeLinecap="round" strokeLinejoin="round"/>
