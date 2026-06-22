@@ -13,7 +13,7 @@ export default function Industries() {
     { name: "E-commerce",    icon: "🛍️", slug: "ecommerce" },
     { name: "Real Estate",   icon: "🏢", slug: "real-estate" },
     { name: "Healthcare",    icon: "⚕️", slug: "healthcare" },
-    { name: "B2B SaaS",      icon: "💻", slug: "saas" },
+    { name: "B2B SaaS",      icon: "💻", slug: "b2b-saas" },
     { name: "Finance",       icon: "📊", slug: "finance" },
     { name: "Education",     icon: "🎓", slug: "education" },
     { name: "Hospitality",   icon: "🏨", slug: "hospitality" },
