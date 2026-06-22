@@ -31,6 +31,11 @@ export default function LeadContactForm() {
     }
   };
 
+  const handleReset = () => {
+    setStatus('idle')
+    setForm({ name: '', email: '', whatsapp: '', service: '', message: '' })
+  }
+
   if (status === "error") {
     return (
       <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-8 text-center">
@@ -46,11 +51,65 @@ export default function LeadContactForm() {
 
   if (status === "success") {
     return (
-      <div className="bg-primary/10 border border-primary/30 rounded-2xl p-8 text-center fade-in">
-        <div className="text-4xl mb-4">✅</div>
-        <h3 className="text-white text-xl font-bold mb-2">Message Sent!</h3>
-        <p className="text-secondary">We will be in touch with you within 24 hours.</p>
-        <button onClick={() => setStatus("idle")} className="mt-6 text-primary text-sm font-bold hover:underline">
+      <div
+        className="text-center py-8 px-4"
+        style={{ animation: 'fadeSlideUp 0.4s ease forwards' }}
+      >
+        <style>{`
+          @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes scaleIn {
+            from { transform: scale(0); opacity: 0; }
+            to   { transform: scale(1); opacity: 1; }
+          }
+        `}</style>
+
+        {/* Checkmark circle */}
+        <div style={{
+          width: 72, height: 72,
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, #2563EB, #7C3AED)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          margin: '0 auto 24px',
+          animation: 'scaleIn 0.3s ease 0.2s both'
+        }}>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+            <path d="M5 13l4 4L19 7" stroke="white" strokeWidth="2.5"
+                  strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+
+        {/* Heading */}
+        <h3 className="font-display font-black text-white text-2xl mb-3">
+          We&apos;ll be in touch soon!
+        </h3>
+
+        {/* Subtext */}
+        <p className="text-secondary text-sm max-w-xs mx-auto leading-relaxed mb-6">
+          Thank you for reaching out. Our team will review your message
+          and get back to you within 24 hours.
+        </p>
+
+        {/* Divider */}
+        <div className="border-t border-white/10 mb-6" />
+
+        {/* Info pills */}
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
+          <span className="text-xs text-secondary bg-white/5 px-3 py-1.5 rounded-full">
+            📧 hello@bviate.com
+          </span>
+          <span className="text-xs text-secondary bg-white/5 px-3 py-1.5 rounded-full">
+            ⚡ Response within 24h
+          </span>
+        </div>
+
+        {/* Reset button */}
+        <button
+          onClick={handleReset}
+          className="text-sm text-primary underline cursor-pointer"
+        >
           Send another message
         </button>
       </div>
