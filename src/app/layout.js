@@ -5,6 +5,7 @@ import "./globals.css";
 // 1. Imports for our global components
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import WhatsAppButton from "../components/WhatsAppButton";
 
 // 2. Initialize the fonts
 const syne = Syne({ 
@@ -28,7 +29,8 @@ export default function RootLayout({ children }) {
         <main className="flex-grow pt-16">{children}</main>
         <GoogleAnalytics gaId="G-XXXXXXXXXX" />
         <Footer />
-        
+        <WhatsAppButton />
+
       </body>
     </html>
   );

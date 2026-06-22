@@ -64,7 +64,7 @@ export default function Navbar() {
             href="/contact" 
             className="hidden md:inline-flex bg-gradient-to-r from-primary to-purple text-white text-sm font-bold py-2.5 px-6 rounded-lg hover:opacity-90 transition-opacity shadow-lg"
           >
-            Book a Call
+            Enquire Now
           </Link>
           
           {/* Mobile Hamburger Menu Button */}
@@ -104,7 +104,7 @@ export default function Navbar() {
             href="/contact" 
             className="bg-gradient-to-r from-primary to-purple text-white text-center font-bold py-4 px-6 rounded-lg shadow-lg"
           >
-            Book a Call
+            Enquire Now
           </Link>
         </div>
       </div>

@@ -43,9 +43,12 @@ export default function Footer() {
           {/* Column 4: Socials (External uses <a> tag) */}
           <div className="flex flex-col gap-4">
             <h4 className="text-white font-bold mb-2">Follow Us</h4>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-white text-sm transition-colors">LinkedIn</a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-white text-sm transition-colors">Instagram</a>
-            <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-white text-sm transition-colors">WhatsApp</a>
+            {/* TODO: Replace with real Bviate LinkedIn company page URL */}
+            <a href="https://www.linkedin.com/company/bviate" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-white text-sm transition-colors">LinkedIn</a>
+            {/* TODO: Replace with real Bviate Instagram handle URL */}
+            <a href="https://www.instagram.com/bviate" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-white text-sm transition-colors">Instagram</a>
+            {/* TODO: Replace 919XXXXXXXXX with real Bviate WhatsApp business number */}
+            <a href="https://wa.me/919XXXXXXXXX?text=Hi%2C%20I%20found%20you%20on%20bviate.com%20and%20wanted%20to%20know%20more." target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-white text-sm transition-colors">WhatsApp</a>
           </div>
 
         </div>
