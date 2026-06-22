@@ -1,8 +1,11 @@
-﻿import Hero from "../components/home/Hero";
+import Hero from "../components/home/Hero";
 import StatsBar from "../components/home/StatsBar";
 import ServicesGrid from "../components/home/ServicesGrid";
 import HowWeWork from "../components/home/HowWeWork";
 import Industries from "../components/home/Industries";
+import Testimonials from "../components/home/Testimonials";
+import FAQ from "../components/home/FAQ";
+import CTABanner from "../components/CTABanner";
 
 export const metadata = {
   title: "Bviate Solutions — We Build, Scale, and Automate Ambitious Brands",
@@ -24,6 +27,9 @@ export default function Page() {
       <ServicesGrid />
       <HowWeWork />
       <Industries />
+      <Testimonials />
+      <FAQ />
+      <CTABanner />
     </main>
   );
 }
