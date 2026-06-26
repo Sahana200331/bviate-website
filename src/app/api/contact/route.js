@@ -37,8 +37,8 @@ export async function POST(request) {
     }
 
     // Step 4: Extract fields
-    const { name, email, phone, whatsapp, service, message } = body
-    console.log("STEP 4 - Fields extracted:", { name, email, phone, whatsapp, service, message })
+    const { name, email, whatsapp, service, message } = body
+    console.log("STEP 4 - Fields extracted:", { name, email, whatsapp, service, message })
 
     // Step 5: Insert into Supabase
     const { data, error } = await supabase
@@ -46,7 +46,6 @@ export async function POST(request) {
       .insert([{
         name,
         email,
-        ...(phone ? { phone } : {}),
         whatsapp,
         service_interested: service,
         message

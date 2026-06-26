@@ -6,7 +6,7 @@ import { useFadeIn } from "../hooks/useFadeIn"; // 1. Added the missing import!
 export default function LeadContactForm() {
   useFadeIn(); // 2. Trigger the animation so it becomes visible!
 
-  const [form, setForm] = useState({ name: "", email: "", phone: "", whatsapp: "", service: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", whatsapp: "", service: "", message: "" });
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
 
   const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -24,7 +24,7 @@ export default function LeadContactForm() {
       const data = await res.json();
       if (!res.ok || !data.success) throw new Error(data.error || "Submission failed");
       setStatus("success");
-      setForm({ name: "", email: "", phone: "", whatsapp: "", service: "", message: "" });
+      setForm({ name: "", email: "", whatsapp: "", service: "", message: "" });
     } catch (err) {
       console.error("Form submission error:", err);
       setStatus("error");
@@ -33,7 +33,7 @@ export default function LeadContactForm() {
 
   const handleReset = () => {
     setStatus('idle')
-    setForm({ name: '', email: '', phone: '', whatsapp: '', service: '', message: '' })
+    setForm({ name: '', email: '', whatsapp: '', service: '', message: '' })
   }
 
   if (status === "error") {
@@ -119,16 +119,10 @@ export default function LeadContactForm() {
         </div>
       </div>
 
-      {/* Phone Number */}
-      <div className="flex flex-col gap-2">
-        <label className="text-white text-sm font-semibold">Phone Number <span className="text-secondary font-normal">(optional)</span></label>
-        <input type="tel" name="phone" value={form.phone} onChange={handleChange} className="bg-navy border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors" placeholder="+91 XXXXX XXXXX" />
-      </div>
-
       {/* WhatsApp & Service Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="flex flex-col gap-2">
-          <label className="text-white text-sm font-semibold">WhatsApp Number</label>
+          <label className="text-white text-sm font-semibold">WhatsApp / Phone Number</label>
           <input type="tel" name="whatsapp" value={form.whatsapp} onChange={handleChange} className="bg-navy border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors" placeholder="+91 XXXXX XXXXX" />
         </div>
         <div className="flex flex-col gap-2">
