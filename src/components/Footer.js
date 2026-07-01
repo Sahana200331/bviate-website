@@ -47,8 +47,7 @@ export default function Footer() {
             <a href="https://www.linkedin.com/company/bviate" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-white text-sm transition-colors">LinkedIn</a>
             {/* TODO: Replace with real Bviate Instagram handle URL */}
             <a href="https://www.instagram.com/bviate" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-white text-sm transition-colors">Instagram</a>
-            {/* TODO: Replace 919XXXXXXXXX with real Bviate WhatsApp business number */}
-            <a href="https://wa.me/919XXXXXXXXX?text=Hi%2C%20I%20found%20you%20on%20bviate.com%20and%20wanted%20to%20know%20more." target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-white text-sm transition-colors">WhatsApp</a>
+            <a href="https://wa.me/918881888321?text=Hi%2C%20I%20found%20you%20on%20bviate.com%20and%20wanted%20to%20know%20more." target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-white text-sm transition-colors">WhatsApp</a>
           </div>
 
         </div>
