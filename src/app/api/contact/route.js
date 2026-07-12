@@ -5,6 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 async function sendEmail({ name, email, whatsapp, service, serviceOther, industry, message }) {
   const toEmail = process.env.CONTACT_TO_EMAIL || "info@bviate.com"
+  const fromEmail = process.env.CONTACT_FROM_EMAIL || "Bviate Website <onboarding@resend.dev>"
 
   const lines = [
     `Name: ${name}`,
@@ -18,7 +19,7 @@ async function sendEmail({ name, email, whatsapp, service, serviceOther, industr
   ].filter(Boolean)
 
   const { error } = await resend.emails.send({
-    from: "Bviate Website <onboarding@resend.dev>",
+    from: fromEmail,
     to: toEmail,
     replyTo: email,
     subject: `New enquiry from ${name}`,
