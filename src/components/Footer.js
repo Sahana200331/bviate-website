@@ -22,6 +22,12 @@ export default function Footer() {
             <p className="text-secondary text-sm leading-relaxed mt-4">
               Building digital growth engines for ambitious brands.
             </p>
+            <a href="mailto:info@bviate.com" className="text-secondary hover:text-white text-sm transition-colors mt-4 inline-block">
+              info@bviate.com
+            </a>
+            <p className="text-secondary text-sm mt-2">
+              Bengaluru, Karnataka, India
+            </p>
           </div>
 
           {/* Column 2: Quick Links (Internal uses <Link>) */}
@@ -53,9 +59,12 @@ export default function Footer() {
         </div>
 
         {/* Copyright Line */}
-        <div className="border-t border-primary/15 pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="border-t border-primary/15 pt-8 text-center md:text-left flex flex-col gap-2">
           <p className="text-secondary text-sm">
             © 2025 Bviate Solutions. All rights reserved.
+          </p>
+          <p className="text-muted text-xs">
+            Bviate Solutions — a division of Bviate Ventures Private Limited · CIN: U62011KA2026PTC222064
           </p>
         </div>
 
