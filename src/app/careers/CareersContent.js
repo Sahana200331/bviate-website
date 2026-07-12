@@ -47,7 +47,7 @@ export default function CareersContent() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Open Positions</h2>
-            <p className="text-secondary">Don't see a fit? Send your portfolio to hello@bviate.com anyway.</p>
+            <p className="text-secondary">Don't see a fit? Send your portfolio to info@bviate.com anyway.</p>
           </div>
 
           <div className="flex flex-col gap-6">

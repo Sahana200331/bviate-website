@@ -35,8 +35,8 @@ export default function ContactPage() {
             <div>
               <h3 className="text-white text-2xl font-bold mb-6">Direct Contact</h3>
               <div className="flex flex-col gap-4">
-                <a href="mailto:hello@bviate.com" className="text-secondary hover:text-white transition-colors">
-                  hello@bviate.com
+                <a href="mailto:info@bviate.com" className="text-secondary hover:text-white transition-colors">
+                  info@bviate.com
                 </a>
               </div>
             </div>

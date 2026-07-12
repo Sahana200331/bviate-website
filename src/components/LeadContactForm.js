@@ -159,7 +159,7 @@ export default function LeadContactForm() {
         {/* Info pills */}
         <div className="flex flex-wrap justify-center gap-3 mb-8">
           <span className="text-xs text-secondary bg-white/5 px-3 py-1.5 rounded-full">
-            📧 hello@bviate.com
+            📧 info@bviate.com
           </span>
           <span className="text-xs text-secondary bg-white/5 px-3 py-1.5 rounded-full">
             ⚡ Response within 24h

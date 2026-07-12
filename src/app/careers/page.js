@@ -128,7 +128,7 @@ export default function CareersPage() {
             </h2>
             <p className="text-secondary text-lg">
               Don't see a role that fits? Email us at{" "}
-              <a href="mailto:hello@bviate.com" className="text-primary hover:underline">hello@bviate.com</a>
+              <a href="mailto:info@bviate.com" className="text-primary hover:underline">info@bviate.com</a>
               {" "}with your background — we hire great people before we have a role for them.
             </p>
           </div>
@@ -154,7 +154,7 @@ export default function CareersPage() {
                   </div>
                 </div>
                 <a
-                  href={`mailto:hello@bviate.com?subject=Application – ${role.title}`}
+                  href={`mailto:info@bviate.com?subject=Application – ${role.title}`}
                   className="shrink-0 bg-gradient-to-r from-primary to-purple text-white font-bold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity text-sm text-center"
                 >
                   Apply Now →
