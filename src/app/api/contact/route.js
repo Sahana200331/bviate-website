@@ -3,9 +3,8 @@ import { Resend } from "resend"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-async function sendEmail(payload) {
+async function sendEmail({ name, email, whatsapp, service, serviceOther, industry, message }) {
   const toEmail = process.env.CONTACT_TO_EMAIL || "info@bviate.com"
-  const { name, email, whatsapp, service, serviceOther, industry, message } = payload
 
   const lines = [
     `Name: ${name}`,
@@ -29,14 +28,17 @@ async function sendEmail(payload) {
   if (error) throw new Error(JSON.stringify(error))
 }
 
-async function sendToWebhook(payload) {
+const WEBHOOK_TIMEOUT_MS = 8000
+
+async function sendToWebhook({ name, email, whatsapp, service, serviceOther, industry, message }) {
   const url = process.env.N8N_CONTACT_WEBHOOK_URL
   if (!url) return false
 
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({ name, email, phone: whatsapp, service, serviceOther, industry, message }),
+    signal: AbortSignal.timeout(WEBHOOK_TIMEOUT_MS),
   })
 
   if (!res.ok) throw new Error(`n8n webhook responded ${res.status}`)
@@ -61,21 +63,24 @@ export async function POST(request) {
 
     const payload = { name, email, whatsapp, service, serviceOther, industry, message }
 
-    const [emailResult, webhookResult] = await Promise.allSettled([
-      sendEmail(payload),
-      sendToWebhook(payload),
-    ])
-
-    if (emailResult.status === "rejected") {
-      console.error("Contact form: Resend send failed:", emailResult.reason.message)
-    }
-    if (webhookResult.status === "rejected") {
-      console.error("Contact form: n8n webhook failed:", webhookResult.reason.message)
+    let emailSent = false
+    try {
+      await sendEmail(payload)
+      emailSent = true
+    } catch (err) {
+      console.error("Contact form: Resend send failed:", err.message)
     }
 
-    const delivered = emailResult.status === "fulfilled" || webhookResult.status === "fulfilled"
+    // Fire-and-forget safety net: n8n appends the lead to a Google Sheet.
+    // A slow/down webhook must never fail the request - Resend is the primary path.
+    let webhookSent = false
+    try {
+      webhookSent = await sendToWebhook(payload)
+    } catch (err) {
+      console.error("Contact form: n8n webhook failed:", err.message)
+    }
 
-    if (!delivered) {
+    if (!emailSent && !webhookSent) {
       return Response.json({ success: false, error: "Delivery failed" }, { status: 500 })
     }
 
