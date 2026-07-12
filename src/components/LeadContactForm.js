@@ -6,7 +6,7 @@ import { useFadeIn } from "../hooks/useFadeIn"; // 1. Added the missing import!
 export default function LeadContactForm() {
   useFadeIn(); // 2. Trigger the animation so it becomes visible!
 
-  const [form, setForm] = useState({ name: "", email: "", whatsapp: "", service: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", whatsapp: "", service: "", serviceOther: "", message: "" });
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
   const [errors, setErrors] = useState({});
 
@@ -17,6 +17,12 @@ export default function LeadContactForm() {
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
       newErrors.email = "Please enter a valid email address"
     if (!form.service) newErrors.service = "Please select a service"
+    if (form.service === "other") {
+      const len = form.serviceOther.trim().length
+      if (len === 0) newErrors.serviceOther = "Please tell us what you need"
+      else if (len < 10) newErrors.serviceOther = "Please provide at least 10 characters"
+      else if (len > 100) newErrors.serviceOther = "Please keep this under 100 characters"
+    }
     if (!form.message.trim()) newErrors.message = "Please tell us about your project"
     return newErrors
   }
@@ -38,15 +44,23 @@ export default function LeadContactForm() {
     setStatus("loading");
 
     try {
+      const payload = {
+        name: form.name,
+        email: form.email,
+        whatsapp: form.whatsapp,
+        service: form.service === "other" ? "Other" : form.service,
+        ...(form.service === "other" ? { serviceOther: form.serviceOther } : {}),
+        message: form.message,
+      };
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (!res.ok || !data.success) throw new Error(data.error || "Submission failed");
       setStatus("success");
-      setForm({ name: "", email: "", whatsapp: "", service: "", message: "" });
+      setForm({ name: "", email: "", whatsapp: "", service: "", serviceOther: "", message: "" });
     } catch (err) {
       console.error("Form submission error:", err);
       setStatus("error");
@@ -55,7 +69,7 @@ export default function LeadContactForm() {
 
   const handleReset = () => {
     setStatus('idle')
-    setForm({ name: '', email: '', whatsapp: '', service: '', message: '' })
+    setForm({ name: '', email: '', whatsapp: '', service: '', serviceOther: '', message: '' })
   }
 
   if (status === "error") {
@@ -210,8 +224,21 @@ export default function LeadContactForm() {
             <option value="seo">SEO Optimization</option>
             <option value="funnels">Funnels & Copywriting</option>
             <option value="social-media-management">Social Media Management</option>
+            <option value="other">Other</option>
           </select>
           {errors.service && <p className="text-red-400 text-xs mt-1">{errors.service}</p>}
+          {form.service === "other" && (
+            <div className="flex flex-col gap-2 mt-3">
+              <label className="text-white text-sm font-semibold">What do you need?*</label>
+              <input
+                type="text" name="serviceOther" value={form.serviceOther} onChange={handleChange}
+                className={`bg-navy border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors ${errors.serviceOther ? 'border-red-500/50' : 'border-white/10'}`}
+                placeholder="e.g. consultation, training, something else…"
+                maxLength={100}
+              />
+              {errors.serviceOther && <p className="text-red-400 text-xs mt-1">{errors.serviceOther}</p>}
+            </div>
+          )}
         </div>
       </div>
 
