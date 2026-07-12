@@ -80,11 +80,12 @@ export default function LeadContactForm() {
           Something went wrong.
         </h3>
         <p className="text-secondary text-sm max-w-xs mx-auto mb-6">
-          We couldn&apos;t send your message. Please try again or
-          reach us directly at{' '}
-          <a href="mailto:hello@bviate.com" className="text-primary hover:underline">
-            hello@bviate.com
+          We couldn&apos;t send your message. Please try again, WhatsApp us, or
+          email{' '}
+          <a href="mailto:info@bviate.com" className="text-primary hover:underline">
+            info@bviate.com
           </a>
+          .
         </p>
         <div className="border-t border-white/10 mb-6"></div>
         <div className="flex gap-3 justify-center flex-wrap">

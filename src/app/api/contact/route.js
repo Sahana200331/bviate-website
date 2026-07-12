@@ -1,72 +1,53 @@
 export const dynamic = "force-dynamic"
-import { createClient } from "@supabase/supabase-js"
+import { Resend } from "resend"
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(request) {
   try {
-    // Step 1: Parse body
     let body
     try {
       body = await request.json()
     } catch (parseErr) {
-      console.error("STEP 1 FAILED - Cannot parse request body:", parseErr.message)
+      console.error("Contact form: cannot parse request body:", parseErr.message)
       return Response.json({ success: false, error: "Invalid request body" }, { status: 400 })
     }
-    console.log("STEP 1 OK - Body received:", JSON.stringify(body))
 
-    // Step 2: Check env vars
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    console.log("STEP 2 - ENV CHECK:", {
-      url: supabaseUrl ?? "MISSING",
-      keyExists: !!supabaseKey,
-      keyLength: supabaseKey?.length ?? 0
+    const { name, email, whatsapp, service, serviceOther, industry, message } = body
+
+    if (!name || !email || !service || !message) {
+      return Response.json({ success: false, error: "Missing required fields" }, { status: 400 })
+    }
+
+    const toEmail = process.env.CONTACT_TO_EMAIL || "info@bviate.com"
+
+    const lines = [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      whatsapp ? `WhatsApp/Phone: ${whatsapp}` : null,
+      `Service: ${service}${serviceOther ? ` (${serviceOther})` : ""}`,
+      industry ? `Industry: ${industry}` : null,
+      "",
+      "Message:",
+      message,
+    ].filter(Boolean)
+
+    const { error } = await resend.emails.send({
+      from: "Bviate Website <onboarding@resend.dev>",
+      to: toEmail,
+      replyTo: email,
+      subject: `New enquiry from ${name}`,
+      text: lines.join("\n"),
     })
-    if (!supabaseUrl || !supabaseKey) {
-      console.error("STEP 2 FAILED - Missing env variables")
-      return Response.json({ success: false, error: "Server config error" }, { status: 500 })
-    }
-
-    // Step 3: Create Supabase client
-    let supabase
-    try {
-      supabase = createClient(supabaseUrl, supabaseKey)
-      console.log("STEP 3 OK - Supabase client created")
-    } catch (clientErr) {
-      console.error("STEP 3 FAILED - Cannot create Supabase client:", clientErr.message)
-      return Response.json({ success: false, error: "DB connection error" }, { status: 500 })
-    }
-
-    // Step 4: Extract fields
-    const { name, email, whatsapp, service, message } = body
-    console.log("STEP 4 - Fields extracted:", { name, email, whatsapp, service, message })
-
-    // Step 5: Insert into Supabase
-    const { data, error } = await supabase
-      .from("leads")
-      .insert([{
-        name,
-        email,
-        whatsapp,
-        service_interested: service,
-        message
-      }])
-      .select()
 
     if (error) {
-      console.error("STEP 5 FAILED - Supabase insert error:", JSON.stringify({
-        message: error.message,
-        code: error.code,
-        details: error.details,
-        hint: error.hint
-      }))
-      return Response.json({ success: false, error: error.message }, { status: 500 })
+      console.error("Contact form: Resend send error:", JSON.stringify(error))
+      return Response.json({ success: false, error: "Email delivery failed" }, { status: 500 })
     }
 
-    console.log("STEP 5 OK - Lead saved successfully:", JSON.stringify(data))
-    return Response.json({ success: true, data }, { status: 200 })
-
+    return Response.json({ success: true }, { status: 200 })
   } catch (err) {
-    console.error("UNEXPECTED CRASH:", err.message, err.stack)
+    console.error("Contact form: unexpected error:", err.message, err.stack)
     return Response.json({ success: false, error: err.message }, { status: 500 })
   }
 }
