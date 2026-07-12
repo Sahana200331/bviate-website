@@ -1,13 +1,26 @@
 // src/components/home/StatsBar.js
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
+
+// Runs synchronously before the browser paints on the client, but is a no-op
+// during SSR (avoids the "useLayoutEffect does nothing on the server" warning).
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 // The Count-Up Animation Pattern from DOC-4
-// Renders the final value by default so it's correct with JS disabled or
-// before hydration; the count-up is a progressive-enhancement animation.
+// Renders the final value for SSR/no-JS so a plain HTML fetch is correct.
+// On the client, the layout effect swaps to "0" before first paint - so the
+// user never sees the real value flash before the count-up animation starts.
 function CountUp({ end, suffix = "" }) {
   const ref = useRef(null);
+
+  useIsomorphicLayoutEffect(() => {
+    if (ref.current) ref.current.textContent = "0" + suffix;
+  }, [suffix]);
+
   useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         let current = 0;
@@ -18,13 +31,14 @@ function CountUp({ end, suffix = "" }) {
             current = end;
             clearInterval(timer);
           }
-          if (ref.current) ref.current.textContent = Math.floor(current) + suffix;
+          el.textContent = Math.floor(current) + suffix;
         }, 30);
         observer.unobserve(entry.target);
       }
     }, { threshold: 0.3 });
 
-    if (ref.current) observer.observe(ref.current);
+    observer.observe(el);
+    return () => observer.disconnect();
   }, [end, suffix]);
 
   return <span ref={ref}>{end}{suffix}</span>;
