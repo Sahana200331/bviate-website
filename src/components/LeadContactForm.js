@@ -9,33 +9,53 @@ export default function LeadContactForm() {
   const [form, setForm] = useState({ name: "", email: "", whatsapp: "", service: "", serviceOther: "", message: "" });
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
   const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+  const [submitAttempted, setSubmitAttempted] = useState(false);
 
-  const validate = () => {
+  const validate = (values) => {
     const newErrors = {}
-    if (!form.name.trim()) newErrors.name = "Full name is required"
-    if (!form.email.trim()) newErrors.email = "Email address is required"
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+    if (!values.name.trim()) newErrors.name = "Full name is required"
+    if (!values.email.trim()) newErrors.email = "Email address is required"
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email))
       newErrors.email = "Please enter a valid email address"
-    if (!form.service) newErrors.service = "Please select a service"
-    if (form.service === "other") {
-      const len = form.serviceOther.trim().length
+    if (!values.service) newErrors.service = "Please select a service"
+    if (values.service === "other") {
+      const len = values.serviceOther.trim().length
       if (len === 0) newErrors.serviceOther = "Please tell us what you need"
       else if (len < 10) newErrors.serviceOther = "Please provide at least 10 characters"
       else if (len > 100) newErrors.serviceOther = "Please keep this under 100 characters"
     }
-    if (!form.message.trim()) newErrors.message = "Please tell us about your project"
+    if (!values.message.trim()) newErrors.message = "Please tell us about your project"
+    else if (values.message.trim().length < 20) newErrors.message = "Message must be at least 20 characters"
+    if (values.whatsapp.trim()) {
+      const digitCount = (values.whatsapp.match(/\d/g) || []).length
+      if (!/^[\d\s+]+$/.test(values.whatsapp)) newErrors.whatsapp = "Use digits, spaces, and + only"
+      else if (digitCount < 8 || digitCount > 15) newErrors.whatsapp = "Enter a valid phone number"
+    }
     return newErrors
   }
 
+  const isFormValid = Object.keys(validate(form)).length === 0;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors(prev => ({ ...prev, [name]: undefined }));
+    const nextForm = { ...form, [name]: value };
+    setForm(nextForm);
+    if (touched[name] || submitAttempted) {
+      setErrors(validate(nextForm));
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name } = e.target;
+    setTouched(prev => ({ ...prev, [name]: true }));
+    setErrors(validate(form));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validate();
+    setSubmitAttempted(true);
+    const validationErrors = validate(form);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
@@ -61,6 +81,8 @@ export default function LeadContactForm() {
       if (!res.ok || !data.success) throw new Error(data.error || "Submission failed");
       setStatus("success");
       setForm({ name: "", email: "", whatsapp: "", service: "", serviceOther: "", message: "" });
+      setTouched({});
+      setSubmitAttempted(false);
     } catch (err) {
       console.error("Form submission error:", err);
       setStatus("error");
@@ -70,6 +92,9 @@ export default function LeadContactForm() {
   const handleReset = () => {
     setStatus('idle')
     setForm({ name: '', email: '', whatsapp: '', service: '', serviceOther: '', message: '' })
+    setErrors({})
+    setTouched({})
+    setSubmitAttempted(false)
   }
 
   if (status === "error") {
@@ -177,6 +202,8 @@ export default function LeadContactForm() {
     );
   }
 
+  const showError = (name) => (touched[name] || submitAttempted) && errors[name];
+
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6 fade-in">
       {/* Name & Email Row */}
@@ -184,20 +211,20 @@ export default function LeadContactForm() {
         <div className="flex flex-col gap-2">
           <label className="text-white text-sm font-semibold">Full Name *</label>
           <input
-            type="text" name="name" value={form.name} onChange={handleChange}
-            className={`bg-navy border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors ${errors.name ? 'border-red-500/50' : 'border-white/10'}`}
+            type="text" name="name" value={form.name} onChange={handleChange} onBlur={handleBlur}
+            className={`bg-navy border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors ${showError('name') ? 'border-red-500/50' : 'border-white/10'}`}
             placeholder="John Doe"
           />
-          {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
+          {showError('name') && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
         </div>
         <div className="flex flex-col gap-2">
           <label className="text-white text-sm font-semibold">Email Address *</label>
           <input
-            type="email" name="email" value={form.email} onChange={handleChange}
-            className={`bg-navy border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors ${errors.email ? 'border-red-500/50' : 'border-white/10'}`}
+            type="email" name="email" value={form.email} onChange={handleChange} onBlur={handleBlur}
+            className={`bg-navy border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors ${showError('email') ? 'border-red-500/50' : 'border-white/10'}`}
             placeholder="john@company.com"
           />
-          {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
+          {showError('email') && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
         </div>
       </div>
 
@@ -206,16 +233,17 @@ export default function LeadContactForm() {
         <div className="flex flex-col gap-2">
           <label className="text-white text-sm font-semibold">WhatsApp / Phone Number</label>
           <input
-            type="tel" name="whatsapp" value={form.whatsapp} onChange={handleChange}
-            className="bg-navy border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors"
+            type="tel" name="whatsapp" value={form.whatsapp} onChange={handleChange} onBlur={handleBlur}
+            className={`bg-navy border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors ${showError('whatsapp') ? 'border-red-500/50' : 'border-white/10'}`}
             placeholder="+91 XXXXX XXXXX"
           />
+          {showError('whatsapp') && <p className="text-red-400 text-xs mt-1">{errors.whatsapp}</p>}
         </div>
         <div className="flex flex-col gap-2">
           <label className="text-white text-sm font-semibold">Service of Interest *</label>
           <select
-            name="service" value={form.service} onChange={handleChange}
-            className={`bg-navy border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors appearance-none ${errors.service ? 'border-red-500/50' : 'border-white/10'}`}
+            name="service" value={form.service} onChange={handleChange} onBlur={handleBlur}
+            className={`bg-navy border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors appearance-none ${showError('service') ? 'border-red-500/50' : 'border-white/10'}`}
           >
             <option value="" disabled>Select a service...</option>
             <option value="automation">N8N Automation</option>
@@ -226,17 +254,17 @@ export default function LeadContactForm() {
             <option value="social-media-management">Social Media Management</option>
             <option value="other">Other</option>
           </select>
-          {errors.service && <p className="text-red-400 text-xs mt-1">{errors.service}</p>}
+          {showError('service') && <p className="text-red-400 text-xs mt-1">{errors.service}</p>}
           {form.service === "other" && (
             <div className="flex flex-col gap-2 mt-3">
               <label className="text-white text-sm font-semibold">What do you need?*</label>
               <input
-                type="text" name="serviceOther" value={form.serviceOther} onChange={handleChange}
-                className={`bg-navy border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors ${errors.serviceOther ? 'border-red-500/50' : 'border-white/10'}`}
+                type="text" name="serviceOther" value={form.serviceOther} onChange={handleChange} onBlur={handleBlur}
+                className={`bg-navy border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors ${showError('serviceOther') ? 'border-red-500/50' : 'border-white/10'}`}
                 placeholder="e.g. consultation, training, something else…"
                 maxLength={100}
               />
-              {errors.serviceOther && <p className="text-red-400 text-xs mt-1">{errors.serviceOther}</p>}
+              {showError('serviceOther') && <p className="text-red-400 text-xs mt-1">{errors.serviceOther}</p>}
             </div>
           )}
         </div>
@@ -246,21 +274,24 @@ export default function LeadContactForm() {
       <div className="flex flex-col gap-2">
         <label className="text-white text-sm font-semibold">Tell us about your project *</label>
         <textarea
-          name="message" value={form.message} onChange={handleChange} rows="5"
-          className={`bg-navy border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors resize-none ${errors.message ? 'border-red-500/50' : 'border-white/10'}`}
+          name="message" value={form.message} onChange={handleChange} onBlur={handleBlur} rows="5"
+          className={`bg-navy border rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors resize-none ${showError('message') ? 'border-red-500/50' : 'border-white/10'}`}
           placeholder="What are your current bottlenecks and growth goals?"
         />
-        {errors.message && <p className="text-red-400 text-xs mt-1">{errors.message}</p>}
+        {showError('message') && <p className="text-red-400 text-xs mt-1">{errors.message}</p>}
       </div>
 
       {/* Submit Button */}
       <button
         type="submit"
-        disabled={status === "loading"}
-        className="bg-gradient-to-r from-primary to-purple text-white font-bold py-4 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 mt-2"
+        disabled={status === "loading" || !isFormValid}
+        className="bg-gradient-to-r from-primary to-purple text-white font-bold py-4 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed mt-2"
       >
         {status === "loading" ? "Sending..." : "Send Message →"}
       </button>
+      {!isFormValid && status !== "loading" && (
+        <p className="text-muted text-xs text-center -mt-4">Fill the required fields to send</p>
+      )}
     </form>
   );
 }
