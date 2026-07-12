@@ -8,7 +8,7 @@ export const metadata = {
   openGraph: {
     title: "Careers – Join Bviate Solutions",
     description: "Join the team at Bviate Solutions. We're building the best digital growth agency in India — and we're looking for obsessive, high-ownership operators.",
-    url: "https://bviateventures.com/careers",
+    url: "/careers",
     siteName: "Bviate Solutions",
     type: "website",
   }

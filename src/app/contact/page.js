@@ -8,7 +8,7 @@ export const metadata = {
   openGraph: {
     title: "Book a Discovery Call | Bviate Solutions",
     description: "Book a Discovery Call with Bviate Solutions.",
-    url: "https://bviate.com/contact",
+    url: "/contact",
     siteName: "Bviate Solutions",
     type: "website",
   },

@@ -7,7 +7,7 @@ export const metadata = {
   openGraph: {
     title: "Funnels & Copywriting | Bviate Solutions",
     description: "High-converting sales funnels, landing pages, and copy that move your ideal client from interested to sold.",
-    url: "https://bviate.com/services/funnels-copywriting",
+    url: "/services/funnels-copywriting",
     siteName: "Bviate Solutions",
     type: "website",
   },

@@ -8,7 +8,7 @@ export const metadata = {
   openGraph: {
     title: 'N8N Business Automation | Bviate Solutions',
     description: 'Your business should grow while you sleep. We build custom N8N workflows to automate your busywork.',
-    url: 'https://bviate.com/services/automation',
+    url: '/services/automation',
     siteName: 'Bviate Solutions',
     type: 'website',
   },

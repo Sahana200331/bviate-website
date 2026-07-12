@@ -13,10 +13,14 @@ const syne = Syne({
   variable: "--font-syne" 
 });
 
-const dmSans = DM_Sans({ 
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-dm-sans" 
+  variable: "--font-dm-sans"
 });
+
+export const metadata = {
+  metadataBase: new URL("https://bviatesolutions.com"),
+};
 
 export default function RootLayout({ children }) {
   return (

@@ -7,7 +7,7 @@ export const metadata = {
   openGraph: {
     title: "Social Media Management | Bviate Solutions",
     description: "Content strategy, creative production, and community management that builds brand equity and turns followers into customers.",
-    url: "https://bviate.com/services/social-media",
+    url: "/services/social-media",
     siteName: "Bviate Solutions",
     type: "website",
   },

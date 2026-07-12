@@ -8,7 +8,7 @@ export const metadata = {
   openGraph: {
     title: "Case Studies – Real Results | Bviate Solutions",
     description: "See how Bviate Solutions has driven measurable growth for ambitious brands through automation, performance marketing, SEO, and web development.",
-    url: "https://bviateventures.com/case-studies",
+    url: "/case-studies",
     siteName: "Bviate Solutions",
     type: "website",
   }

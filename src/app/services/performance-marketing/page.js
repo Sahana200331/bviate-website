@@ -7,7 +7,7 @@ export const metadata = {
   openGraph: {
     title: "Performance Marketing | Bviate Solutions",
     description: "Data-driven Google and Meta ad campaigns that lower your cost-per-lead and maximise ROAS. No guesswork — just results.",
-    url: "https://bviate.com/services/performance-marketing",
+    url: "/services/performance-marketing",
     siteName: "Bviate Solutions",
     type: "website",
   },

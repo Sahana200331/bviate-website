@@ -8,7 +8,7 @@ export const metadata = {
   openGraph: {
     title: "About Us | Bviate Solutions",
     description: "Learn about Bviate Solutions — our story, mission, and the team driving digital growth for ambitious brands.",
-    url: "https://bviateventures.com/about",
+    url: "/about",
     siteName: "Bviate Solutions",
     type: "website",
   }

@@ -7,7 +7,7 @@ export const metadata = {
   openGraph: {
     title: "Web Development | Bviate Solutions",
     description: "Custom Next.js websites built for performance, SEO, and conversion. Fast, scalable, and designed to turn visitors into paying clients.",
-    url: "https://bviate.com/services/web-development",
+    url: "/services/web-development",
     siteName: "Bviate Solutions",
     type: "website",
   },

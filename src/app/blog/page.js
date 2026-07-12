@@ -4,7 +4,7 @@
   openGraph: {
     title: "Digital Marketing Blog | Bviate Solutions",
     description: "Read the latest insights on the Digital Marketing Blog by Bviate Solutions.",
-    url: "https://bviate.com/blog",
+    url: "/blog",
     siteName: "Bviate Solutions",
     type: "website",
   },

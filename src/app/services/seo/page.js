@@ -7,7 +7,7 @@ export const metadata = {
   openGraph: {
     title: "SEO Optimisation | Bviate Solutions",
     description: "Technical SEO, content strategy, and authority building that drives compounding organic traffic — without paying per click.",
-    url: "https://bviate.com/services/seo",
+    url: "/services/seo",
     siteName: "Bviate Solutions",
     type: "website",
   },
