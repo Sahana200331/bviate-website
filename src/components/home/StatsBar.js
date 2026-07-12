@@ -3,6 +3,8 @@
 import { useEffect, useRef } from "react";
 
 // The Count-Up Animation Pattern from DOC-4
+// Renders the final value by default so it's correct with JS disabled or
+// before hydration; the count-up is a progressive-enhancement animation.
 function CountUp({ end, suffix = "" }) {
   const ref = useRef(null);
   useEffect(() => {
@@ -12,20 +14,20 @@ function CountUp({ end, suffix = "" }) {
         const step = end / 50;
         const timer = setInterval(() => {
           current += step;
-          if (current >= end) { 
-            current = end; 
-            clearInterval(timer); 
+          if (current >= end) {
+            current = end;
+            clearInterval(timer);
           }
           if (ref.current) ref.current.textContent = Math.floor(current) + suffix;
         }, 30);
         observer.unobserve(entry.target);
       }
     }, { threshold: 0.3 });
-    
+
     if (ref.current) observer.observe(ref.current);
   }, [end, suffix]);
-  
-  return <span ref={ref}>0{suffix}</span>;
+
+  return <span ref={ref}>{end}{suffix}</span>;
 }
 
 export default function StatsBar() {
