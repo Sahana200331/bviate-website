@@ -19,7 +19,8 @@ export default function Industries() {
     { name: "Hospitality",   icon: "🏨", slug: "hospitality" },
     { name: "Manufacturing", icon: "🏭", slug: "manufacturing" },
     { name: "Legal",         icon: "⚖️", slug: "legal" },
-    { name: "Logistics",     icon: "🚚", slug: "logistics" }
+    { name: "Logistics",     icon: "🚚", slug: "logistics" },
+    { name: "Other — Discuss My Challenge", icon: "🔧", slug: "other" }
   ];
 
   return (

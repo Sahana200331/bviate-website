@@ -14,7 +14,10 @@ export const metadata = {
   },
 };
 
-export default function ContactPage() {
+export default async function ContactPage({ searchParams }) {
+  const params = await searchParams;
+  const industry = typeof params?.industry === "string" ? params.industry : null;
+
   return (
     <>
       <main className="pt-32 pb-24 px-13 max-w-7xl mx-auto">
@@ -29,7 +32,7 @@ export default function ContactPage() {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
           <div className="bg-card border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl">
-            <LeadContactForm />
+            <LeadContactForm initialIndustry={industry} />
           </div>
           <div className="flex flex-col justify-center gap-10">
             <div>

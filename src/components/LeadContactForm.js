@@ -3,10 +3,28 @@
 import { useState } from "react";
 import { useFadeIn } from "../hooks/useFadeIn"; // 1. Added the missing import!
 
-export default function LeadContactForm() {
+const INDUSTRY_LABELS = {
+  ecommerce: "E-commerce",
+  "real-estate": "Real Estate",
+  healthcare: "Healthcare",
+  "b2b-saas": "B2B SaaS",
+  finance: "Finance",
+  education: "Education",
+  hospitality: "Hospitality",
+  manufacturing: "Manufacturing",
+  legal: "Legal",
+  logistics: "Logistics",
+  other: "Other",
+};
+
+export default function LeadContactForm({ initialIndustry = null }) {
   useFadeIn(); // 2. Trigger the animation so it becomes visible!
 
-  const [form, setForm] = useState({ name: "", email: "", whatsapp: "", service: "", serviceOther: "", message: "" });
+  const [form, setForm] = useState({
+    name: "", email: "", whatsapp: "",
+    service: initialIndustry === "other" ? "other" : "",
+    serviceOther: "", message: "",
+  });
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
@@ -70,6 +88,7 @@ export default function LeadContactForm() {
         whatsapp: form.whatsapp,
         service: form.service === "other" ? "Other" : form.service,
         ...(form.service === "other" ? { serviceOther: form.serviceOther } : {}),
+        ...(initialIndustry ? { industry: initialIndustry } : {}),
         message: form.message,
       };
       const res = await fetch("/api/contact", {
@@ -80,7 +99,11 @@ export default function LeadContactForm() {
       const data = await res.json();
       if (!res.ok || !data.success) throw new Error(data.error || "Submission failed");
       setStatus("success");
-      setForm({ name: "", email: "", whatsapp: "", service: "", serviceOther: "", message: "" });
+      setForm({
+        name: "", email: "", whatsapp: "",
+        service: initialIndustry === "other" ? "other" : "",
+        serviceOther: "", message: "",
+      });
       setTouched({});
       setSubmitAttempted(false);
     } catch (err) {
@@ -91,7 +114,11 @@ export default function LeadContactForm() {
 
   const handleReset = () => {
     setStatus('idle')
-    setForm({ name: '', email: '', whatsapp: '', service: '', serviceOther: '', message: '' })
+    setForm({
+      name: '', email: '', whatsapp: '',
+      service: initialIndustry === "other" ? "other" : "",
+      serviceOther: '', message: '',
+    })
     setErrors({})
     setTouched({})
     setSubmitAttempted(false)
@@ -206,6 +233,11 @@ export default function LeadContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6 fade-in">
+      {initialIndustry && (
+        <span className="inline-flex items-center gap-1.5 text-xs font-medium text-primary bg-primary/10 border border-primary/20 px-3 py-1.5 rounded-full self-start">
+          Industry: {INDUSTRY_LABELS[initialIndustry] || initialIndustry} ✓
+        </span>
+      )}
       {/* Name & Email Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="flex flex-col gap-2">
