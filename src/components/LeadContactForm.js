@@ -46,9 +46,11 @@ export default function LeadContactForm({ initialIndustry = null }) {
     if (!values.message.trim()) newErrors.message = "Please tell us about your project"
     else if (values.message.trim().length < 20) newErrors.message = "Message must be at least 20 characters"
     if (values.whatsapp.trim()) {
-      const digitCount = (values.whatsapp.match(/\d/g) || []).length
-      if (!/^[\d\s+]+$/.test(values.whatsapp)) newErrors.whatsapp = "Use digits, spaces, and + only"
-      else if (digitCount < 8 || digitCount > 15) newErrors.whatsapp = "Enter a valid phone number"
+      if (!/^[\d\s+-]+$/.test(values.whatsapp)) newErrors.whatsapp = "Use digits, spaces, dashes, and + only"
+      else {
+        const digitCount = values.whatsapp.replace(/\D/g, "").length
+        if (digitCount < 8 || digitCount > 15) newErrors.whatsapp = "Enter a valid phone number"
+      }
     }
     return newErrors
   }
