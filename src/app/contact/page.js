@@ -1,6 +1,7 @@
 ﻿import LeadContactForm from "../../components/LeadContactForm";
 import SectionTag from "../../components/ui/SectionTag";
 import CTABanner from "../../components/CTABanner";
+import CalendlyEmbed from "../../components/CalendlyEmbed";
 
 export const metadata = {
   title: "Book a Discovery Call | Bviate Solutions",
@@ -42,6 +43,10 @@ export default async function ContactPage({ searchParams }) {
                   info@bviate.com
                 </a>
               </div>
+            </div>
+            <div>
+              <h3 className="text-white text-2xl font-bold mb-6">Book a Call Directly</h3>
+              <CalendlyEmbed />
             </div>
           </div>
         </div>
