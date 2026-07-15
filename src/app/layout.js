@@ -6,6 +6,7 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import WhatsAppButton from "../components/WhatsAppButton";
+import ChatWidget from "../components/ChatWidget";
 
 // 2. Initialize the fonts
 const syne = Syne({ 
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
         <GoogleAnalytics gaId="G-XXXXXXXXXX" />
         <Footer />
         <WhatsAppButton />
+        <ChatWidget />
 
       </body>
     </html>
