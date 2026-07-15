@@ -7,6 +7,7 @@ export default function CTABanner({
   title = "Let's Build Your Digital Growth Engine",
   subtitle = "Book a free 30-minute discovery call. No fluff, no sales pitch. Just a clear, actionable plan.",
   primaryText = "Book a Free Discovery Call →",
+  primaryHref = "/contact",
   secondaryText = "Explore Services",
   secondaryHref = "/services"
 }) {
@@ -17,7 +18,7 @@ export default function CTABanner({
         <h2 className="font-display text-4xl font-black tracking-tight text-white mb-3">{title}</h2>
         <p className="text-secondary font-light text-base leading-relaxed max-w-xl mx-auto mb-10">{subtitle}</p>
         <div className="flex gap-3 justify-center flex-wrap">
-          <Button href="/contact">{primaryText}</Button>
+          <Button href={primaryHref}>{primaryText}</Button>
           <Button href={secondaryHref} variant="secondary">{secondaryText}</Button>
         </div>
       </div>
