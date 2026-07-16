@@ -2,6 +2,7 @@
 "use client";
 import { useState } from "react";
 import { useFadeIn } from "../hooks/useFadeIn"; // 1. Added the missing import!
+import { validateContactForm } from "../lib/validateContactForm";
 
 const INDUSTRY_LABELS = {
   ecommerce: "E-commerce",
@@ -18,42 +19,21 @@ const INDUSTRY_LABELS = {
 };
 
 export default function LeadContactForm({ initialIndustry = null }) {
-  useFadeIn(); // 2. Trigger the animation so it becomes visible!
-
   const [form, setForm] = useState({
     name: "", email: "", whatsapp: "",
     service: initialIndustry === "other" ? "other" : "",
     serviceOther: "", message: "",
   });
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
+
+  // Re-scan for .fade-in whenever status changes back to "idle" - the form
+  // is a freshly-mounted node after a reset and needs to be re-observed.
+  useFadeIn([status]);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [submitAttempted, setSubmitAttempted] = useState(false);
 
-  const validate = (values) => {
-    const newErrors = {}
-    if (!values.name.trim()) newErrors.name = "Full name is required"
-    if (!values.email.trim()) newErrors.email = "Email address is required"
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email))
-      newErrors.email = "Please enter a valid email address"
-    if (!values.service) newErrors.service = "Please select a service"
-    if (values.service === "other") {
-      const len = values.serviceOther.trim().length
-      if (len === 0) newErrors.serviceOther = "Please tell us what you need"
-      else if (len < 10) newErrors.serviceOther = "Please provide at least 10 characters"
-      else if (len > 100) newErrors.serviceOther = "Please keep this under 100 characters"
-    }
-    if (!values.message.trim()) newErrors.message = "Please tell us about your project"
-    else if (values.message.trim().length < 20) newErrors.message = "Message must be at least 20 characters"
-    if (values.whatsapp.trim()) {
-      if (!/^[\d\s+-]+$/.test(values.whatsapp)) newErrors.whatsapp = "Use digits, spaces, dashes, and + only"
-      else {
-        const digitCount = values.whatsapp.replace(/\D/g, "").length
-        if (digitCount < 8 || digitCount > 15) newErrors.whatsapp = "Enter a valid phone number"
-      }
-    }
-    return newErrors
-  }
+  const validate = validateContactForm;
 
   const isFormValid = Object.keys(validate(form)).length === 0;
 

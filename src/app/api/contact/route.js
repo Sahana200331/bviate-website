@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic"
 import { Resend } from "resend"
+import { validateContactForm } from "../../../lib/validateContactForm"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -11,7 +12,7 @@ async function sendEmail({ name, email, whatsapp, service, serviceOther, industr
     `Name: ${name}`,
     `Email: ${email}`,
     whatsapp ? `WhatsApp/Phone: ${whatsapp}` : null,
-    `Service: ${service}${serviceOther ? ` (${serviceOther})` : ""}`,
+    `Service: ${service}${serviceOther ? ` — ${serviceOther}` : ""}`,
     industry ? `Industry: ${industry}` : null,
     "",
     "Message:",
@@ -58,30 +59,36 @@ export async function POST(request) {
 
     const { name, email, whatsapp, service, serviceOther, industry, message } = body
 
-    if (!name || !email || !service || !message) {
-      return Response.json({ success: false, error: "Missing required fields" }, { status: 400 })
+    const validationErrors = validateContactForm({ name, email, service, serviceOther, message, whatsapp })
+    if (Object.keys(validationErrors).length > 0) {
+      const [field, error] = Object.entries(validationErrors)[0]
+      console.error("Contact form: server-side validation failed:", JSON.stringify(validationErrors))
+      return Response.json({ success: false, error, field }, { status: 400 })
     }
 
     const payload = { name, email, whatsapp, service, serviceOther, industry, message }
 
-    let emailSent = false
-    try {
-      await sendEmail(payload)
-      emailSent = true
-    } catch (err) {
-      console.error("Contact form: Resend send failed:", err.message)
+    // Run in parallel (not sequential) so total worst-case latency is
+    // max(email, webhook) rather than their sum - a slow n8n webhook
+    // (up to WEBHOOK_TIMEOUT_MS) stacked after Resend risked pushing the
+    // whole request close to Vercel's default 10s function timeout.
+    const [emailResult, webhookResult] = await Promise.allSettled([
+      sendEmail(payload),
+      sendToWebhook(payload),
+    ])
+
+    if (emailResult.status === "rejected") {
+      console.error("Contact form: Resend send failed:", emailResult.reason.message)
+    }
+    if (webhookResult.status === "rejected") {
+      console.error("Contact form: n8n webhook failed:", webhookResult.reason.message)
     }
 
-    // Fire-and-forget safety net: n8n appends the lead to a Google Sheet.
-    // A slow/down webhook must never fail the request - Resend is the primary path.
-    let webhookSent = false
-    try {
-      webhookSent = await sendToWebhook(payload)
-    } catch (err) {
-      console.error("Contact form: n8n webhook failed:", err.message)
-    }
+    const emailSent = emailResult.status === "fulfilled"
+    const webhookSent = webhookResult.status === "fulfilled" && webhookResult.value === true
 
     if (!emailSent && !webhookSent) {
+      console.error(`Contact form: both delivery paths failed for submission from ${email}`)
       return Response.json({ success: false, error: "Delivery failed" }, { status: 500 })
     }
 
