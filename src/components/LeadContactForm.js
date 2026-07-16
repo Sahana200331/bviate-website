@@ -1,7 +1,6 @@
 // src/components/LeadContactForm.js
 "use client";
 import { useState } from "react";
-import { useFadeIn } from "../hooks/useFadeIn"; // 1. Added the missing import!
 import { validateContactForm } from "../lib/validateContactForm";
 
 const INDUSTRY_LABELS = {
@@ -25,10 +24,6 @@ export default function LeadContactForm({ initialIndustry = null }) {
     serviceOther: "", message: "",
   });
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
-
-  // Re-scan for .fade-in whenever status changes back to "idle" - the form
-  // is a freshly-mounted node after a reset and needs to be re-observed.
-  useFadeIn([status]);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [submitAttempted, setSubmitAttempted] = useState(false);
@@ -214,7 +209,7 @@ export default function LeadContactForm({ initialIndustry = null }) {
   const showError = (name) => (touched[name] || submitAttempted) && errors[name];
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6 fade-in">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6 animate-fade-slide-up">
       {initialIndustry && (
         <span className="inline-flex items-center gap-1.5 text-xs font-medium text-primary bg-primary/10 border border-primary/20 px-3 py-1.5 rounded-full self-start">
           Industry: {INDUSTRY_LABELS[initialIndustry] || initialIndustry} ✓

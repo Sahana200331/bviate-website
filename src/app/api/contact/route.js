@@ -78,10 +78,18 @@ export async function POST(request) {
     ])
 
     if (emailResult.status === "rejected") {
-      console.error("Contact form: Resend send failed:", emailResult.reason.message)
+      console.error(
+        `Contact form: Resend send failed for service="${service}":`,
+        emailResult.reason.message,
+        emailResult.reason.stack
+      )
     }
     if (webhookResult.status === "rejected") {
-      console.error("Contact form: n8n webhook failed:", webhookResult.reason.message)
+      console.error(
+        `Contact form: n8n webhook failed for service="${service}":`,
+        webhookResult.reason.message,
+        webhookResult.reason.stack
+      )
     }
 
     const emailSent = emailResult.status === "fulfilled"
