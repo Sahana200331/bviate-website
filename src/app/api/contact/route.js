@@ -96,8 +96,13 @@ export async function POST(request) {
     const webhookSent = webhookResult.status === "fulfilled" && webhookResult.value === true
 
     if (!emailSent && !webhookSent) {
+      const emailError = emailResult.status === "rejected" ? emailResult.reason.message : "not attempted"
+      const webhookError = webhookResult.status === "rejected" ? webhookResult.reason.message : "not configured"
       console.error(`Contact form: both delivery paths failed for submission from ${email}`)
-      return Response.json({ success: false, error: "Delivery failed" }, { status: 500 })
+      return Response.json(
+        { success: false, error: "Delivery failed", emailError, webhookError },
+        { status: 500 }
+      )
     }
 
     return Response.json({ success: true }, { status: 200 })
