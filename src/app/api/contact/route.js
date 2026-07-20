@@ -4,9 +4,11 @@ import { validateContactForm } from "../../../lib/validateContactForm"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+const SANDBOX_FROM_EMAIL = "Bviate Website <onboarding@resend.dev>"
+
 async function sendEmail({ name, email, whatsapp, service, serviceOther, industry, message }) {
   const toEmail = process.env.CONTACT_TO_EMAIL || "info@bviate.com"
-  const fromEmail = process.env.CONTACT_FROM_EMAIL || "Bviate Website <onboarding@resend.dev>"
+  const fromEmail = process.env.CONTACT_FROM_EMAIL || SANDBOX_FROM_EMAIL
 
   const lines = [
     `Name: ${name}`,
@@ -19,13 +21,26 @@ async function sendEmail({ name, email, whatsapp, service, serviceOther, industr
     message,
   ].filter(Boolean)
 
-  const { error } = await resend.emails.send({
-    from: fromEmail,
+  const send = (from) => resend.emails.send({
+    from,
     to: toEmail,
     replyTo: email,
     subject: `New enquiry from ${name}`,
     text: lines.join("\n"),
   })
+
+  let { error } = await send(fromEmail)
+
+  // A custom from-domain that isn't verified in Resend yet (or loses
+  // verification later) must never take down the whole contact form -
+  // fall back to the always-working sandbox sender instead.
+  if (error && error.statusCode === 403 && fromEmail !== SANDBOX_FROM_EMAIL) {
+    console.error(
+      "Contact form: CONTACT_FROM_EMAIL domain not verified in Resend, falling back to sandbox sender:",
+      JSON.stringify(error)
+    )
+    ;({ error } = await send(SANDBOX_FROM_EMAIL))
+  }
 
   if (error) throw new Error(JSON.stringify(error))
 }
@@ -39,7 +54,19 @@ async function sendToWebhook({ name, email, whatsapp, service, serviceOther, ind
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, phone: whatsapp, service, serviceOther, industry, message }),
+    // Always send every key, even when empty - omitting keys entirely
+    // (JSON.stringify drops undefined values) is a common cause of n8n
+    // workflow errors when an expression references a field that was
+    // never present in the payload at all.
+    body: JSON.stringify({
+      name,
+      email,
+      phone: whatsapp || "",
+      service,
+      serviceOther: serviceOther || "",
+      industry: industry || "",
+      message,
+    }),
     signal: AbortSignal.timeout(WEBHOOK_TIMEOUT_MS),
   })
 
